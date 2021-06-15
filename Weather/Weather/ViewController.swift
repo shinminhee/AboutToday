@@ -34,6 +34,7 @@ class ViewController: UIViewController {
     let dressButton = UIButton()
     
     let timeView = UIView()
+    var emptyImg : String = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_5QaNylWhFr3MEqOmsiDH4vC7NKMxrpuQVQ&usqp=CAU"
     
     
     override func viewDidLoad() {
@@ -50,11 +51,12 @@ class ViewController: UIViewController {
     }
     
     func setNewsUI() {
+        view.backgroundColor = .white
         let guide = view.safeAreaLayoutGuide
         let height = guide.layoutFrame.size.height
         NetworkManager.shared.getNews{(news) in
             guard let news = news else {return}
-            //            print(news[1].title)
+//            print(news[1].title)
             self.newsArray = news
             self.loadData()
             print(#function, self.newsArray.count)
@@ -82,17 +84,13 @@ class ViewController: UIViewController {
     
     func loadData() {
         for index in newsArray.indices {
-            let url = URL(string: newsArray[index].urlToImage ?? "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpicjumbo.com%2Ffree-photos%2Fggb%2F&psig=AOvVaw2cZ8wKxWennq431orLuDzd&ust=1615904727148000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKih6bnAsu8CFQAAAAAdAAAAABAD")
+            let url = URL(string: newsArray[index].urlToImage ?? emptyImg) ?? URL( string: emptyImg )
             do {
-                guard let url = url else {
-                    imageArray.append(UIImage())
-                    
-                    return }
-                let data = try Data(contentsOf: url)
+                let data = try Data(contentsOf: url! )
                 let image = UIImage(data: data) ?? UIImage()
                 imageArray.append(image)
                 print(#function, imageArray.count)
-                //                newsTableView.reloadData()
+//                newsTableView.reloadData()
             }
             catch {
                 imageArray.append(UIImage())
@@ -376,7 +374,7 @@ extension ViewController : UITableViewDataSource{
         
         customCell.titleLabel.text = newsArray[indexPath.item].title
         if !imageArray.isEmpty {
-//            customCell.mainImageView.image = imageArray[indexPath.item]
+            customCell.mainImageView.image = imageArray[indexPath.item]
         }
         return customCell
     }
@@ -385,5 +383,7 @@ extension ViewController : UITableViewDataSource{
 }
 
 extension ViewController : UITableViewDelegate{
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIApplication.shared.open(URL(string: newsArray[indexPath.item].url!)!)
+    }
 }

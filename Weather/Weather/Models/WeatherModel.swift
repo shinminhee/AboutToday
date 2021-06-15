@@ -8,14 +8,14 @@
 import Foundation
 
 struct WeatherModel {
-    let urlSeoulString = "https://api.openweathermap.org/data/2.5/weather?q=seoul&appid=2c932674540ed3b9dd1bcac7c1983e1f"
-    let urlDaeguString = "https://api.openweathermap.org/data/2.5/weather?q=daegu&appid=2c932674540ed3b9dd1bcac7c1983e1f"
-    let urlDaejeonString = "https://api.openweathermap.org/data/2.5/weather?q=daejeon&appid=2c932674540ed3b9dd1bcac7c1983e1f"
-    let urlIncheonString = "https://api.openweathermap.org/data/2.5/weather?q=incheon&appid=2c932674540ed3b9dd1bcac7c1983e1f"
-    let urlBusanString = "https://api.openweathermap.org/data/2.5/weather?q=busan&appid=2c932674540ed3b9dd1bcac7c1983e1f"
-    let urlYeosuString = "https://api.openweathermap.org/data/2.5/weather?q=yeosu&appid=2c932674540ed3b9dd1bcac7c1983e1f"
-    let urlGangneungString = "https://api.openweathermap.org/data/2.5/weather?q=gangneung&appid=2c932674540ed3b9dd1bcac7c1983e1f"
-    let urlGwangjuString = "https://api.openweathermap.org/data/2.5/weather?q=gwangju&appid=2c932674540ed3b9dd1bcac7c1983e1f"
+    let urlSeoulString = "https://api.openweathermap.org/data/2.5/weather?q=seoul&appid="
+    let urlDaeguString = "https://api.openweathermap.org/data/2.5/weather?q=daegu&appid="
+    let urlDaejeonString = "https://api.openweathermap.org/data/2.5/weather?q=daejeon&appid="
+    let urlIncheonString = "https://api.openweathermap.org/data/2.5/weather?q=incheon&appid="
+    let urlBusanString = "https://api.openweathermap.org/data/2.5/weather?q=busan&appid="
+    let urlYeosuString = "https://api.openweathermap.org/data/2.5/weather?q=yeosu&appid="
+    let urlGangneungString = "https://api.openweathermap.org/data/2.5/weather?q=gangneung&appid="
+    let urlGwangjuString = "https://api.openweathermap.org/data/2.5/weather?q=gwangju&appid="
     
     func loadSeoulData(completion: @escaping (Weather) -> Void) {
         guard let url = URL(string: urlSeoulString) else { fatalError() }

@@ -36,6 +36,11 @@ class ViewController: UIViewController {
     let timeView = UIView()
     var emptyImg : String = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_5QaNylWhFr3MEqOmsiDH4vC7NKMxrpuQVQ&usqp=CAU"
     
+    //junha
+    let calButton = UIButton(type: .system)
+    let toDoTableView = UITableView()
+    let dateFormatter = DateFormatter()
+    var today = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +53,44 @@ class ViewController: UIViewController {
         setDress()
         setNewsUI()
         setNewsTable()
+        
+        toDoTableView.dataSource = self
+        toDoTableView.delegate = self
+        toDoTableView.register(ToDoTableViewCell.self, forCellReuseIdentifier: "Cell")
+        let now = Date()
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+        today = self.dateFormatter.string(from: now)
+        setToDoUI()
+    }
+    
+    //junha
+    override func viewWillAppear(_ animated: Bool) {
+        toDoTableView.reloadData()
+    }
+    func setToDoUI() {
+        [calButton, toDoTableView].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        calButton.setTitle("일정 추가", for: .normal)
+        calButton.addTarget(self, action: #selector(nextVC(_:)), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            calButton.topAnchor.constraint(equalTo: toDoTableView.bottomAnchor),
+            calButton.centerXAnchor.constraint(equalTo: toDoTableView.centerXAnchor),
+            
+            toDoTableView.topAnchor.constraint(equalTo: weatherView.bottomAnchor),
+            toDoTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            toDoTableView.trailingAnchor.constraint(equalTo: view.centerXAnchor),
+            toDoTableView.heightAnchor.constraint(equalToConstant: 160),
+            
+        ])
+    }
+    
+    @objc
+    func nextVC(_ sender: UIButton) {
+        let nextVC = CalendarViewController()
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
     }
     
     func setNewsUI() {
